@@ -2,6 +2,28 @@
 
 namespace WebsiteApp
 {
+
+    internal sealed class Browser
+    {
+        private string Path { get; set; }
+        public Browser(string Path)
+        {
+            this.Path = Path;
+        }
+
+        public bool OpenWebsite(string url)
+        {
+            if (File.Exists(this.Path))
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo() { Arguments = $"--window-size=10,10 --incognito --app={url}", FileName = this.Path };
+                Process.Start(startInfo);
+                return true;
+            }
+            else
+                return false;
+
+        }
+    }
     internal class Program
     {
         static void Main(string[] args)
@@ -10,34 +32,22 @@ namespace WebsiteApp
             if (args.Length > 0)
                 url = args[0];
             else
-                url = "https://google.com";
+                url = "https://kyedev.xyz";
 
-            string BrowserPath = string.Empty;
+            string ProgramFilesX86Folder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            string ProgramFilesFolder = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
-            string EdgePath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + @"\Microsoft\Edge\Application\msedge.exe";
-            if (File.Exists(EdgePath))
-                BrowserPath = EdgePath;
+            Browser Edge = new Browser(ProgramFilesX86Folder + @"\Microsoft\Edge\Application\msedge.exe");
+            Browser Brave = new Browser(ProgramFilesFolder + @"\BraveSoftware\Brave-Browser\Application\brave.exe");
 
-            string BravePath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + @"\BraveSoftware\Brave-Browser\Application\brave.exe";
-            if (File.Exists(BravePath))
-                BrowserPath = BravePath;
+            if (Brave.OpenWebsite(url))
+                return;
+            else if (Edge.OpenWebsite(url))
+                return;
+            else
+                Console.WriteLine("No browser found");
 
-            if (!string.IsNullOrEmpty(url))
-            {
-                ProcessStartInfo startInfo = new ProcessStartInfo() { Arguments = $"--incognito --bwsi --app={url}", FileName = BrowserPath };
-                Process.Start(startInfo);
-            }
-        }
-
-
-        enum Browser
-        {
-            Edge,
-            Brave
-        }
-        public static void OpenWebsite(Browser browser, string url)
-        {
-
+            Console.ReadKey();
         }
     }
 }
