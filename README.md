@@ -1,4 +1,7 @@
 # Website To App
+
+This software is useful for websites that are not [Progressive Web Applications (PWA)](https://en.wikipedia.org/wiki/Progressive_web_app), it can make any website feel like a native app while it is actually running chrome under the hood.
+
 [![GitHub issues](https://img.shields.io/github/issues/KyeOnDiscord/WebsiteToApp)](https://github.com/KyeOnDiscord/WebsiteToApp/issues)
 [![GitHub stars](https://img.shields.io/github/stars/KyeOnDiscord/WebsiteToApp)](https://github.com/KyeOnDiscord/WebsiteToApp/stargazers)
 
